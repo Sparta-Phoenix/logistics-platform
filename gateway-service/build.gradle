@@ -28,53 +28,14 @@ ext {
 }
 
 dependencies {
-
-	// PostgreSQL
-	runtimeOnly 'org.postgresql:postgresql'
-
-	// Redis Session Clustering
-	implementation 'org.springframework.session:spring-session-data-redis'
-
-	// Jedis
-	implementation 'redis.clients:jedis:5.2.0'
-
-	// JWT
-	implementation 'io.jsonwebtoken:jjwt:0.12.6'
-
-	// Gateway
-	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-
-	// Reactor (Spring WebFlux의 리액티브 프로그래밍 라이브러리)
-	testImplementation 'io.projectreactor:reactor-test'
-
-	// Eureka client
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-	// config client
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-
-	// Zipkin
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-	implementation 'io.github.openfeign:feign-micrometer'
-	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
-
-	// Resilience4j
-	implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.2.0'
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-
-	// Spring Boot Actuator
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-	// Lombok
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-
-	// JPA
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
