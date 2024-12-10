@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID>,
     QuerydslPredicateExecutor<Product>,
     QuerydslBinderCustomizer<QProduct> {
 
-  @Override
+  @Override // Predicate의 조건을 수정: 문자 검색 시 'equals 조건' -> 'contains 조건'
   default void customize(QuerydslBindings querydslBindings, @NotNull QProduct qProduct) {
     querydslBindings.bind(String.class)
         .all((StringPath path, Collection<? extends String> values) -> {
