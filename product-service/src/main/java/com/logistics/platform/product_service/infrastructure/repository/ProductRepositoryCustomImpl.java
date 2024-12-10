@@ -50,10 +50,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         .select(new QProductResponseDto(product))
         .from(product)
         .where(builder)
-        .orderBy(
-            getDynamicSort(
-                pageable.getSort(), product.getType(), product.getMetadata())
-                .toArray(OrderSpecifier[]::new))
+        .orderBy(getDynamicSort(pageable.getSort(), product.getType(), product.getMetadata()))
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
@@ -73,7 +70,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
   // 정렬(Sort) 정보를 기반으로 Querydsl의 OrderSpecifier 객체들을 동적으로 생성
   // 제네릭을 사용하여 특정 엔터티 클래스에 종속되지 않음
-  private  <T> List<OrderSpecifier> getDynamicSort(Sort sort, Class<? extends T> entityClass,
+  private <T> OrderSpecifier[] getDynamicSort(Sort sort, Class<? extends T> entityClass,
       PathMetadata pathMetadata) {
     List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
 
@@ -88,7 +85,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
       orderSpecifiers.add(new OrderSpecifier(direction, pathBuilder.get(prop)));
     });
 
-    return orderSpecifiers;
+    return orderSpecifiers.toArray(new OrderSpecifier[0]); // list 크기에 맞춰 배열 생성
   }
 
 
