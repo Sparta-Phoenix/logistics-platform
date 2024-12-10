@@ -112,4 +112,9 @@ public class Product {
     // 수정자 추가
 
   }
+
+  public void delete() {
+    this.isDeleted = true;
+    // 삭제자 추가
+  }
 }

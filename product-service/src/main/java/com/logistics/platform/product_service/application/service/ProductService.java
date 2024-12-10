@@ -73,4 +73,15 @@ public class ProductService {
 
     return new ProductResponseDto(product);
   }
+
+  @Transactional
+  public ProductResponseDto deleteProduct(UUID productId) {
+
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
+
+    product.delete();
+
+    return new ProductResponseDto(product);
+  }
 }

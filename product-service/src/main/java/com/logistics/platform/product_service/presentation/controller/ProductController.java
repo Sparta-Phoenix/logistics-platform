@@ -14,6 +14,7 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +69,16 @@ public class ProductController {
         = productService.updateProduct(productId, productRequestDto);
 
     return ResponseEntity.ok().body(productResponseDto);
+  }
+
+  // 삭제자 추가 예정
+  @DeleteMapping("/{productId}")
+  public ResponseEntity deleteProduct(
+      @PathVariable UUID productId
+  ) {
+    ProductResponseDto productResponseDto = productService.deleteProduct(productId);
+
+    return ResponseEntity.ok().body(productResponseDto.getProductName() + " 삭제 완료.");
   }
 
 }
