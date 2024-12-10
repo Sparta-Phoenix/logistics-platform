@@ -1,6 +1,7 @@
 package com.logistics.platform.product_service.presentation.response;
 
 import com.logistics.platform.product_service.domain.model.Product;
+import com.querydsl.core.annotations.QueryProjection;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class ProductResponseDto {
 
   private Long count;
 
+  @QueryProjection
   public ProductResponseDto(Product product) {
     this.productId = product.getId();
     this.companyId = product.getCompanyId();
