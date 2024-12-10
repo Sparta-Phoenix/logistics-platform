@@ -1,5 +1,6 @@
 package com.logistics.platform.product_service.domain.model;
 
+import com.logistics.platform.product_service.presentation.request.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -92,4 +93,23 @@ public class Product {
   }
 
 
+  public void update(ProductRequestDto productRequestDto) {
+    if (productRequestDto.getProductName() != null) {
+      this.productName = productRequestDto.getProductName();
+    }
+    if (productRequestDto.getPrice() != null) {
+      this.price = productRequestDto.getPrice();
+    }
+    if (productRequestDto.getCount() != null) {
+      this.count = productRequestDto.getCount();
+    }
+    if (productRequestDto.getCompanyId() != null) {
+      this.companyId = productRequestDto.getCompanyId();
+    }
+    if (productRequestDto.getHubId() != null) {
+      this.hubId = productRequestDto.getHubId();
+    }
+    // 수정자 추가
+
+  }
 }

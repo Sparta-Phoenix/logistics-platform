@@ -62,4 +62,15 @@ public class ProductService {
 
     return new PagedModel<>(productResponseDtoPage);
   }
+
+  @Transactional
+  public ProductResponseDto updateProduct(UUID productId, ProductRequestDto productRequestDto) {
+
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
+
+    product.update(productRequestDto);
+
+    return new ProductResponseDto(product);
+  }
 }

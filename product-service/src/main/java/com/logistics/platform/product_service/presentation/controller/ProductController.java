@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,18 @@ public class ProductController {
         = productService.getProductsPage(uuidList, predicate, pageable);
 
     return ResponseEntity.ok().body(productResponseDtoPage);
+  }
+
+  // 수정자 추가 예정
+  @PatchMapping("/{productId}")
+  public ResponseEntity updateProduct(
+      @PathVariable UUID productId,
+      @RequestBody ProductRequestDto productRequestDto) {
+
+    ProductResponseDto productResponseDto
+        = productService.updateProduct(productId, productRequestDto);
+
+    return ResponseEntity.ok().body(productResponseDto);
   }
 
 }
