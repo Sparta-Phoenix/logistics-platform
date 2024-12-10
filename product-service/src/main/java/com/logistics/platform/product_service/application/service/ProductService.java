@@ -4,6 +4,7 @@ import com.logistics.platform.product_service.domain.model.Product;
 import com.logistics.platform.product_service.domain.repository.ProductRepository;
 import com.logistics.platform.product_service.presentation.request.ProductRequestDto;
 import com.logistics.platform.product_service.presentation.response.ProductResponseDto;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,14 @@ public class ProductService {
         .companyId(productRequestDto.getCompanyId())
         .hubId(productRequestDto.getHubId())
         .build();
+
+    return new ProductResponseDto(product);
+  }
+
+  public ProductResponseDto getProduct(UUID productId) {
+
+    Product product = productRepository.findById(productId)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId 입니다."));
 
     return new ProductResponseDto(product);
   }
