@@ -115,6 +115,7 @@ public class Product {
 
   public void delete() {
     this.isDeleted = true;
+    this.deletedAt = LocalDateTime.now();
     // 삭제자 추가
   }
 }

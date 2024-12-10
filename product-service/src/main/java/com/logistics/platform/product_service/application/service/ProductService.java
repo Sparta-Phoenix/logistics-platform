@@ -50,6 +50,10 @@ public class ProductService {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId 입니다."));
 
+    if(product.getIsDeleted()) {
+      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+    }
+
     return new ProductResponseDto(product);
   }
 
@@ -69,6 +73,10 @@ public class ProductService {
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
 
+    if(product.getIsDeleted()) {
+      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+    }
+
     product.update(productRequestDto);
 
     return new ProductResponseDto(product);
@@ -79,6 +87,10 @@ public class ProductService {
 
     Product product = productRepository.findById(productId)
         .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
+
+    if(product.getIsDeleted()) {
+      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+    }
 
     product.delete();
 
