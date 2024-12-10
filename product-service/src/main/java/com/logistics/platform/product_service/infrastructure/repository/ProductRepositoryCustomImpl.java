@@ -31,6 +31,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     if (uuidList != null && !uuidList.isEmpty()) {
       builder.and(product.id.in(uuidList));
     }
+    builder.and(product.isDeleted.eq(false));
 
     int size = pageable.getPageSize();
     size = (size == 30 || size == 50) ? size : 10;
