@@ -12,6 +12,7 @@ import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -75,6 +76,20 @@ public class Product {
   // 관리허브 ID
   @Column(nullable = false)
   private UUID hubId;
+
+  @Builder
+  public Product(
+      String productName, Long price, Long count, String createdBy, UUID companyId, UUID hubId
+  ) {
+    this.productName = productName;
+    this.price = price;
+    if (count != null) {
+      this.count = count;
+    }
+    this.createdBy = createdBy;
+    this.companyId = companyId;
+    this.hubId = hubId;
+  }
 
 
 }
