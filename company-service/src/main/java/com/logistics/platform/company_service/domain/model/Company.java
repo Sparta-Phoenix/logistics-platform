@@ -3,24 +3,32 @@ package com.logistics.platform.company_service.domain.model;
 import com.logistics.platform.company_service.presentation.request.CompanyModifyRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "p_company")
 public class Company {
 
@@ -32,10 +40,13 @@ public class Company {
   private UUID hubId;
 
   @Column(nullable = false)
+  private Long companyManagerId;
+
+  @Column(nullable = false)
   private String companyName;
 
   @Column(nullable = false)
-  private String number;
+  private String phoneNumber;
 
   @Column(nullable = false)
   private String address;
@@ -44,21 +55,43 @@ public class Company {
   @Enumerated(EnumType.STRING)
   private CompanyType companyType;
 
-  // todo 생성일, ~ 삭제자 어떻게 추가할건지?
+  @CreatedDate
+  @Column(updatable = false, nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime createdAt;
+
+  @CreatedBy
+  @Column(updatable = false, nullable = false, length = 100)
+  private String createdBy;
+
+  @LastModifiedDate
+  @Column
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime updatedAt;
+
+  @LastModifiedBy
+  @Column(length = 100)
+  private String updatedBy;
+
+  @Column
+  @Temporal(TemporalType.TIMESTAMP)
+  private LocalDateTime deletedAt;
 
   @Column(nullable = false)
-  private boolean isDeleted;
+  private Boolean isDeleted = false;
 
   public void changeCompany(CompanyModifyRequest companyModifyRequest) {
     this.hubId = companyModifyRequest.getHubId();
     this.companyName = companyModifyRequest.getCompanyName();
-    this.number = companyModifyRequest.getNumber();
+    this.phoneNumber = companyModifyRequest.getPhoneNumber();
     this.address = companyModifyRequest.getAddress();
-    this.companyType = !companyModifyRequest.isCheckCompanyType() ? CompanyType.MANUFACTURER
+    this.companyType = !companyModifyRequest.getIsCompanyTypeReceiver() ? CompanyType.MANUFACTURER
         : CompanyType.RECEIVER;
+    // todo 나중에 수정자 업데이트 추가
   }
 
   public void deleteCompany() {
     this.isDeleted = true;
+    // todo 나중에 삭제자 업데이트 추가
   }
 }

@@ -9,11 +9,14 @@ import lombok.Getter;
 public class CompanyResponse {
 
   private UUID companyId;
+
   private UUID hubId;
+
+  private Long companyManagerId;
 
   private String companyName;
 
-  private String number;
+  private String phoneNumber;
 
   private String address;
 
@@ -22,8 +25,9 @@ public class CompanyResponse {
   public CompanyResponse(Company company) {
     this.companyId = company.getCompanyId();
     this.hubId = company.getHubId();
+    this.companyManagerId = company.getCompanyManagerId();
     this.companyName = company.getCompanyName();
-    this.number = company.getNumber();
+    this.phoneNumber = company.getPhoneNumber();
     this.address = company.getAddress();
     this.checkCompanyType = company.getCompanyType();
   }
