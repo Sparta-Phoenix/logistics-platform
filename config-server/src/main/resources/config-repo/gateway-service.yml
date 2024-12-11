@@ -1,0 +1,61 @@
+server:
+  port: 19091
+
+service:
+  jwt:
+    access-expiration: 86400000  # 24시간
+    secret-key: "TGV0J3Mgc3RhcnQgTVNBIHByb2plY3QhIFdPVyBGYW50YXN0aWMgYmFieSEgRnVuISBGdW5GdW4hIQ=="
+
+spring:
+  main:
+    web-application-type: reactive  # Spring 애플리케이션이 리액티브 웹 애플리케이션으로 설정됨
+  application:
+    name: gateway-service  # 애플리케이션 이름을 'gateway-service'로 설정
+  cloud:
+    gateway:
+      routes: # Spring Cloud Gateway의 라우팅 설정
+        - id: order-service  # 라우트 식별자
+          uri: lb://order-service  # 'order-service'라는 이름으로 로드 밸런싱된 서비스로 라우팅
+          predicates:
+            - Path=/orders/**  # /order/** 경로로 들어오는 요청을 이 라우트로 처리
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/products/**
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/delivery/**
+      discovery:
+        locator:
+          enabled: true  # 서비스 디스커버리를 통해 동적으로 라우트를 생성하도록 설정
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL} # jdbc:postgresql://localhost:5432/{DB이름}
+    username: ${DB_USERNAME} # postgres
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          use_sql_comments: true
+
+
+management:
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"  # Zipkin 서버의 엔드포인트 지정
+  tracing:
+    sampling:
+      probability: 1.0  # Zipkin 트레이싱 샘플링 비율 (1.0: 100%)
+  endpoints:
+    web:
+      exposure:
+        include: refresh  # [Post] /actuator/refresh 엔드포인트 노출 (config server 변경사항 수동 갱신)
