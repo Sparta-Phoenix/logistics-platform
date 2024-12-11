@@ -83,6 +83,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// JackSon
+	implementation 'com.bedatadriven:jackson-datatype-jts:2.4'
 }
 
 tasks.named('test') {

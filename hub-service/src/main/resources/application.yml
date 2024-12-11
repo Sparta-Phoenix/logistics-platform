@@ -1,5 +1,5 @@
 server:
-  port: 0  # 임시 포트, 이후 Config 서버 설정으로 덮어씌움
+  port: 19097  # 임시 포트, 이후 Config 서버 설정으로 덮어씌움
 
 spring:
   application:
@@ -17,10 +17,11 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisPG95Dialect
     hibernate:
       ddl-auto: update
 
@@ -29,3 +30,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:19090/eureka/
+
+google:
+  maps:
+    api:
+      key: ${GOOGLE_API_KEY}
