@@ -1,0 +1,31 @@
+server:
+  port: 0  # ?? ??, ?? Config ?? ???? ????
+
+spring:
+  application:
+    name: delivery-manager-service
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Eureka server ?? (??? ??: localhost, ??: 19090)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
