@@ -62,6 +62,7 @@ public class Product {
   private String updatedBy;
 
   @Column
+  @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime deletedAt;
 
   @Column
