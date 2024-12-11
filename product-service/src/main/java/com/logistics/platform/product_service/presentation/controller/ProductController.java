@@ -2,6 +2,7 @@ package com.logistics.platform.product_service.presentation.controller;
 
 import com.logistics.platform.product_service.application.service.ProductService;
 import com.logistics.platform.product_service.domain.model.Product;
+import com.logistics.platform.product_service.presentation.global.ResponseDto;
 import com.logistics.platform.product_service.presentation.request.ProductRequestDto;
 import com.logistics.platform.product_service.presentation.response.ProductResponseDto;
 import com.querydsl.core.types.Predicate;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedModel;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,23 +33,24 @@ public class ProductController {
   private final ProductService productService;
 
   @PostMapping
-  public ResponseEntity createProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
+  public ResponseDto<ProductResponseDto> createProduct(
+      @Valid @RequestBody ProductRequestDto productRequestDto) {
 
     ProductResponseDto productResponseDto = productService.createProduct(productRequestDto);
 
-    return ResponseEntity.ok().body(productResponseDto);
+    return new ResponseDto<>(ResponseDto.SUCCESS, "상품이 생성되었습니다.", productResponseDto);
   }
 
   @GetMapping("/{productId}")
-  public ResponseEntity getProduct(@PathVariable UUID productId) {
+  public ResponseDto<ProductResponseDto> getProduct(@PathVariable UUID productId) {
 
     ProductResponseDto productResponseDto = productService.getProduct(productId);
 
-    return ResponseEntity.ok().body(productResponseDto);
+    return new ResponseDto<>(ResponseDto.SUCCESS, "상품이 조회되었습니다.", productResponseDto);
   }
 
   @GetMapping
-  public ResponseEntity getProductsPage(
+  public ResponseDto<PagedModel<ProductResponseDto>> getProductsPage(
       @RequestParam(required = false) List<UUID> uuidList,
       @QuerydslPredicate(root = Product.class) Predicate predicate,
       @PageableDefault(direction = Direction.DESC, sort = "createdAt") Pageable pageable) {
@@ -57,29 +58,32 @@ public class ProductController {
     PagedModel<ProductResponseDto> productResponseDtoPage
         = productService.getProductsPage(uuidList, predicate, pageable);
 
-    return ResponseEntity.ok().body(productResponseDtoPage);
+    return new ResponseDto<>(ResponseDto.SUCCESS, "상품이 목록이 조회되었습니다.", productResponseDtoPage);
   }
 
   // 수정자 추가 예정
   @PatchMapping("/{productId}")
-  public ResponseEntity updateProduct(
+  public ResponseDto<ProductResponseDto> updateProduct(
       @PathVariable UUID productId,
       @Valid @RequestBody ProductRequestDto productRequestDto) {
 
     ProductResponseDto productResponseDto
         = productService.updateProduct(productId, productRequestDto);
 
-    return ResponseEntity.ok().body(productResponseDto);
+    return new ResponseDto<>(ResponseDto.SUCCESS, "상품이 수정되었습니다.", productResponseDto);
   }
 
   // 삭제자 추가 예정
   @DeleteMapping("/{productId}")
-  public ResponseEntity deleteProduct(
+  public ResponseDto deleteProduct(
       @PathVariable UUID productId
   ) {
     ProductResponseDto productResponseDto = productService.deleteProduct(productId);
 
-    return ResponseEntity.ok().body(productResponseDto.getProductName() + " 삭제 완료.");
+    return new ResponseDto<>(
+        ResponseDto.SUCCESS,
+        productResponseDto.getProductName() + ": 상품이 생성되었습니다."
+    );
   }
 
 }

@@ -2,6 +2,7 @@ package com.logistics.platform.product_service.application.service;
 
 import com.logistics.platform.product_service.domain.model.Product;
 import com.logistics.platform.product_service.domain.repository.ProductRepository;
+import com.logistics.platform.product_service.presentation.global.exception.CustomApiException;
 import com.logistics.platform.product_service.presentation.request.ProductRequestDto;
 import com.logistics.platform.product_service.presentation.response.ProductResponseDto;
 import com.querydsl.core.types.Predicate;
@@ -48,10 +49,10 @@ public class ProductService {
   public ProductResponseDto getProduct(UUID productId) {
 
     Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId 입니다."));
+        .orElseThrow(() -> new CustomApiException("존재하지 않는 productId 입니다."));
 
     if(product.getIsDeleted()) {
-      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+      throw new CustomApiException("이미 삭제된 상품입니다.");
     }
 
     return new ProductResponseDto(product);
@@ -71,10 +72,10 @@ public class ProductService {
   public ProductResponseDto updateProduct(UUID productId, ProductRequestDto productRequestDto) {
 
     Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
+        .orElseThrow(() -> new CustomApiException("존재하지 않는 productId입니다."));
 
     if(product.getIsDeleted()) {
-      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+      throw new CustomApiException("이미 삭제된 상품입니다.");
     }
 
     product.update(productRequestDto);
@@ -86,10 +87,10 @@ public class ProductService {
   public ProductResponseDto deleteProduct(UUID productId) {
 
     Product product = productRepository.findById(productId)
-        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 productId입니다."));
+        .orElseThrow(() -> new CustomApiException("존재하지 않는 productId입니다."));
 
     if(product.getIsDeleted()) {
-      throw new IllegalArgumentException("이미 삭제된 상품입니다.");
+      throw new CustomApiException("이미 삭제된 상품입니다.");
     }
 
     product.delete();
