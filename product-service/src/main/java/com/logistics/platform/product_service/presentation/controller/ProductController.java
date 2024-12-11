@@ -5,6 +5,7 @@ import com.logistics.platform.product_service.domain.model.Product;
 import com.logistics.platform.product_service.presentation.request.ProductRequestDto;
 import com.logistics.platform.product_service.presentation.response.ProductResponseDto;
 import com.querydsl.core.types.Predicate;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ProductController {
   private final ProductService productService;
 
   @PostMapping
-  public ResponseEntity createProduct(@RequestBody ProductRequestDto productRequestDto) {
+  public ResponseEntity createProduct(@Valid @RequestBody ProductRequestDto productRequestDto) {
 
     ProductResponseDto productResponseDto = productService.createProduct(productRequestDto);
 
@@ -63,7 +64,7 @@ public class ProductController {
   @PatchMapping("/{productId}")
   public ResponseEntity updateProduct(
       @PathVariable UUID productId,
-      @RequestBody ProductRequestDto productRequestDto) {
+      @Valid @RequestBody ProductRequestDto productRequestDto) {
 
     ProductResponseDto productResponseDto
         = productService.updateProduct(productId, productRequestDto);

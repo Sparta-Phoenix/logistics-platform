@@ -1,6 +1,7 @@
 package com.logistics.platform.product_service.presentation.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,9 @@ public class ProductRequestDto {
 
   private String productName;
 
+  @Min(value = 0, message = "Price cannot be negative")
   private Long price;
 
+  @Min(value = 0, message = "Count cannot be negative")
   private Long count;
 }
