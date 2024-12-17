@@ -1,0 +1,118 @@
+version: "3.9"
+
+services:
+  eureka-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "19090:19090"
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    networks:
+      - msa-network
+
+  config-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - "18080:18080"
+    networks:
+      - msa-network
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "19091:19091"
+    networks:
+      - msa-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "19095:19095"
+    networks:
+      - msa-network
+
+  order-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order-service
+    ports:
+      - "19092:19092"
+    networks:
+      - msa-network
+
+  product-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: product-service
+    ports:
+      - "19093:19093"
+    networks:
+      - msa-network
+
+  delivery-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: delivery-service
+    ports:
+      - "19094:19094"
+    networks:
+      - msa-network
+
+  hub-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hub-service
+    ports:
+      - "19097:19097"
+    networks:
+      - msa-network
+
+  delivery-manager-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: delivery-manager-service
+    ports:
+      - "19098:19098"
+    networks:
+      - msa-network
+
+  company-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: company-service
+    ports:
+      - "19096:19096"
+    networks:
+      - msa-network
+
+  slack-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slack-service
+    ports:
+      - "19099:19099"
+    networks:
+      - msa-network
+
+networks:
+  msa-network:
+    driver: bridge

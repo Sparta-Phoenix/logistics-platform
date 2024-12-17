@@ -39,3 +39,5 @@ out/
 # Ignore macOS system files
 .DS_Store
 **/.DS_Store/**
+# Ignore Gradle build output directory
+build
