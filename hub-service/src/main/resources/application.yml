@@ -1,0 +1,38 @@
+server:
+  port: 0  # 임시 포트, 이후 Config 서버 설정으로 덮어씌움
+
+spring:
+  application:
+    name: hub-service
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+
+
+# Eureka server 연결 (호스트 이름: localhost, 포트: 19090)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+google:
+  maps:
+    api:
+      key: ${GOOGLE_API_KEY}
+
+kakao:
+  api:
+    key: ${KAKAO_API_KEY}
+
+springdoc:
+  api-docs:
+    version: openapi_3_1
+    enabled: true
+    path: /swagger/hub/v3/api-docs
+  enable-spring-security: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json

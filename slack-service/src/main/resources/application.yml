@@ -1,0 +1,28 @@
+server:
+  port: 19099
+
+spring:
+  application:
+    name: slack-service
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+
+# Eureka server 연결 (호스트 이름: localhost, 포트: 19090)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
+
+slack:
+  bot:
+    token: ${BOT_TOKEN}
+
+google:
+  gemini:
+    api:
+      key: ${GEMINI_TOKEN}

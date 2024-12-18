@@ -1,0 +1,33 @@
+server:
+  port: 19098
+
+service:
+  jwt:
+    access-expiration: 86400000  # 24시간
+    secret-key: "TGV0J3Mgc3RhcnQgTVNBIHByb2plY3QhIFdPVyBGYW50YXN0aWMgYmFieSEgRnVuISBGdW5GdW4hIQ=="
+
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL} # jdbc:postgresql://localhost:5432/{DB이름}
+    username: ${DB_USERNAME} # postgres
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          use_sql_comments: true
+
+springdoc:
+  api-docs:
+    version: openapi_3_1
+    enabled: true
+    path: /swagger/delivery-manager/v3/api-docs
+  enable-spring-security: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
