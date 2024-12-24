@@ -95,8 +95,9 @@ AI 연동 관리
 ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
 
 ## 📃 인프라 설계서
-![image](https://github.com/user-attachments/assets/776d0bfe-0a3f-44fe-96bd-58a476a28c87)
+>redis: 캐싱 / Geo Service: 길찾기 / AI: 메세지 발송
 
+![인프라 설계도](https://github.com/user-attachments/assets/e92ef1bd-7807-4c2d-9a03-e787616ba871)
 
 ## 📑 ERD
 ![team4erd](https://github.com/user-attachments/assets/297b320f-a622-4329-8847-8ff088fe336e)
